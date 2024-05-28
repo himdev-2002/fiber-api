@@ -9,7 +9,6 @@ import (
 	"syscall"
 	"tde/fiber-api/core"
 
-	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/monitor"
 )
 
@@ -17,9 +16,16 @@ func main() {
 	app := core.SetupApp()
 	app.Get("/metrics", monitor.New(monitor.Config{Title: os.Getenv("APP_NAME")}))
 
-	app.Get("/", func(c *fiber.Ctx) error {
-		return c.SendString("Hello, World!")
-	})
+	// app.Get("/", func(c *fiber.Ctx) error {
+	// 	return c.SendString("Hello, World!")
+	// })
+
+	app.Static("/", "app/.output/public")
+	// app.Static("/_nuxt", "app/.output/public/_nuxt")
+	// app.Static("/themes", "app/.output/public/_nuxt")
+	// app.Get("/app/*", func(ctx *fiber.Ctx) error {
+	// 	return ctx.SendFile("app/.output/public/index.html")
+	// })
 
 	// app.Listen(":3000")
 
