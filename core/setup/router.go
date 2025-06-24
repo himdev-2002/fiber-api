@@ -1,8 +1,8 @@
 package setup
 
 import (
-	"tde/fiber-api/api"
-	"tde/fiber-api/core/services"
+	"him/fiber-api/api"
+	"him/fiber-api/core/services"
 
 	"github.com/gofiber/fiber/v2"
 )

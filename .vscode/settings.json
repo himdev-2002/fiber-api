@@ -1,0 +1,28 @@
+{
+    "rest-client.environmentVariables": {
+        "$shared": {
+            // "version": "v1",
+            "prodToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXJzYWt0aSIsImVtYWlsIjoidXNlcnNha3RpQG1haWwuY29tIiwiZmlyc3RfbmFtZSI6IlVzZXIiLCJsYXN0X25hbWUiOiJTYWt0aSIsInJvbGVzIjpbIkFETUlOIl0sImlzcyI6Ikdpbi1BUEkiLCJzdWIiOiJ1c2Vyc2FrdGkiLCJleHAiOjE3NDg1MjI1MDYsIm5iZiI6MTc0ODQzNjEwNiwiaWF0IjoxNzQ4NDM2MTA2LCJqdGkiOiJiSDdGWXlncmpXWFM0bnlmWVRuTW0zIn0.YiKrMnK8hsOcrEPpc0Oq2W0pW0RnY9nse3kFwGu-Plc",
+            "localToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXJzYWt0aSIsImVtYWlsIjoidXNlcnNha3RpQG1haWwuY29tIiwiZmlyc3RfbmFtZSI6IlVzZXIiLCJsYXN0X25hbWUiOiJTYWt0aSIsInJvbGVzIjpbIkFETUlOIl0sImlzcyI6Ikdpbi1BUEkiLCJzdWIiOiJ1c2Vyc2FrdGkiLCJleHAiOjE3NDg1MjI1MDYsIm5iZiI6MTc0ODQzNjEwNiwiaWF0IjoxNzQ4NDM2MTA2LCJqdGkiOiJiSDdGWXlncmpXWFM0bnlmWVRuTW0zIn0.YiKrMnK8hsOcrEPpc0Oq2W0pW0RnY9nse3kFwGu-Plc"
+        },
+        "local": {
+            // "version": "v2",
+            "protocol": "https",
+            "host": "localhost",
+            "port": "5000",
+            "token": "{{$shared localToken}}",
+            // "secretKey": "devSecret"
+        },
+        "production": {
+            "protocol": "https",
+            "host": "example.com",
+            "port": "5000",
+            "token": "{{$shared prodToken}}",
+            // "secretKey": "prodSecret"
+        }
+    },
+    "sonarlint.connectedMode.project": {
+        "connectionId": "SonarCloud himdev2002",
+        "projectKey": "himdev_fiber-go"
+    }
+}

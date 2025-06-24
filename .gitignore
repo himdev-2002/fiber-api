@@ -3,6 +3,8 @@
 #
 # Binaries for programs and plugins
 *.exe
+app
+app-linux
 *.exe~
 *.dll
 *.so
@@ -19,6 +21,7 @@
 
 # Go workspace file
 go.work
+.rest-client.env.json
 
 logs
 logs/

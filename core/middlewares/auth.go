@@ -1,10 +1,10 @@
 package middlewares
 
 import (
+	"him/fiber-api/core/handlers"
+	"him/fiber-api/core/helpers"
 	"os"
 	"strings"
-	"tde/fiber-api/core/handlers"
-	"tde/fiber-api/core/helpers"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -16,7 +16,7 @@ func JWTAuthenticate() fiber.Handler {
 		}
 		// fmt.Println(c.GetReqHeaders())
 		bearer := c.Get("Authorization", "")
-		// fmt.Println(clientToken)
+		// fmt.Println(bearer)
 		if bearer == "" {
 			return handlers.HandleError(c, &handlers.UnauthorizedError{Message: "Not Authorized"})
 		}
@@ -30,10 +30,14 @@ func JWTAuthenticate() fiber.Handler {
 			return handlers.HandleError(c, &handlers.UnauthorizedError{Message: err.Error()})
 		}
 		// fmt.Println(claims)
-		c.Set("email", claims.Email)
-		c.Set("first_name", claims.FirstName)
-		c.Set("last_name", claims.LastName)
-		c.Set("username", claims.Username)
+		c.Locals("email", claims.Email)
+		c.Locals("first_name", claims.FirstName)
+		c.Locals("last_name", claims.LastName)
+		c.Locals("username", claims.Username)
+		// fmt.Println("JOIN: ", strings.Join(claims.Roles, "|"))
+		c.Locals("roles", claims.Roles)
+		// fmt.Println("EMAIL: ", c.Locals("email"))
+		// fmt.Println("ROLES: ", c.Locals("roles"))
 		err2 := c.Next()
 
 		return err2

@@ -1,9 +1,9 @@
 package controllers
 
 import (
-	public_handlers "tde/fiber-api/api/public/handlers"
-	"tde/fiber-api/api/public/structs"
-	"tde/fiber-api/core/handlers"
+	public_handlers "him/fiber-api/api/public/handlers"
+	"him/fiber-api/api/public/structs"
+	"him/fiber-api/core/handlers"
 
 	"github.com/gofiber/fiber/v2"
 )

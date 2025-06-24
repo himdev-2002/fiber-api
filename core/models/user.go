@@ -1,9 +1,9 @@
 package models
 
 import (
+	"him/fiber-api/core/services"
 	"html"
 	"strings"
-	"tde/fiber-api/core/services"
 	"time"
 
 	"github.com/lithammer/shortuuid"
@@ -21,6 +21,7 @@ type User struct {
 	FirstName string    `gorm:"size:50;not null" structs:"first_name"`
 	LastName  *string   `gorm:"size:50" structs:"last_name"`
 	Status    uint      `gorm:"default:1;precision:1;size:1;not null" structs:"status"`
+	Token     string    `gorm:"unique" structs:"token,"`
 	CreatedAt time.Time `gorm:"not null;autoCreateTime" structs:"created_at"`
 	UpdatedAt time.Time `gorm:"not null;autoUpdateTime" structs:"updated_at,omitempty"`
 }
@@ -107,6 +108,26 @@ func (u *User) ChangePassword(pass string) (*User, error) {
 
 	u.UpdatedAt = now
 	u.Password = string(hashedPassword)
+	return u, nil
+}
+
+func (u *User) ChangeToken(token string) (*User, error) {
+	hashedToken, err := bcrypt.GenerateFromPassword([]byte(token), bcrypt.DefaultCost)
+	if err != nil {
+		return &User{}, err
+	}
+	tx := services.DBCore.Session(&gorm.Session{SkipDefaultTransaction: true})
+	now := time.Now()
+	result := tx.Table("m_user").Where("id = ?", u.ID).Update("token", string(hashedToken)).Update("updated_at", now)
+	// fmt.Println(result.Statement.SQL.String())
+	// fmt.Println(result.RowsAffected)
+	// fmt.Println(result.Error)
+	if result.RowsAffected <= 0 {
+		return &User{}, result.Error
+	}
+
+	u.UpdatedAt = now
+	u.Token = string(hashedToken)
 	return u, nil
 }
 

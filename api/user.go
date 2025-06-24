@@ -1,8 +1,8 @@
 package api
 
 import (
-	router "tde/fiber-api/api/user"
-	"tde/fiber-api/core/services"
+	router "him/fiber-api/api/user"
+	"him/fiber-api/core/services"
 
 	"github.com/gofiber/fiber/v2"
 )

@@ -2,9 +2,9 @@ package handlers
 
 import (
 	"fmt"
-	auth_structs "tde/fiber-api/api/auth/structs"
-	"tde/fiber-api/core/models"
-	"tde/fiber-api/core/services"
+	auth_structs "him/fiber-api/api/auth/structs"
+	"him/fiber-api/core/models"
+	"him/fiber-api/core/services"
 
 	"github.com/go-playground/validator/v10"
 	"golang.org/x/crypto/bcrypt"

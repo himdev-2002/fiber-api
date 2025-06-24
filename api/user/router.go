@@ -1,25 +1,34 @@
 package router
 
 import (
-	"tde/fiber-api/api/user/controllers"
-	"tde/fiber-api/core/middlewares"
-	"tde/fiber-api/core/services"
+	"him/fiber-api/api/user/controllers"
+	"him/fiber-api/core/helpers"
+	"him/fiber-api/core/middlewares"
+	"him/fiber-api/core/services"
 
 	"github.com/gofiber/fiber/v2"
 )
 
 func SetupRouter(r *fiber.App) {
-	users_r := r.Group("/users")
+	usersR := r.Group("/api/users", middlewares.JWTAuthenticate())
 
 	if log, err := services.InfoLog(); err == nil {
-		log.Info().Msgf("Add GET::/users/active router")
+		log.Info().Msgf("Add GET::/api/users/active router")
 	}
-	users_r.Get("/active", middlewares.JWTAuthenticate(), controllers.GetActiveUsers())
+	usersR.Get("/active", controllers.GetActiveUsers())
 
-	user_r := r.Group("/user")
+	userR := r.Group("/api/user", middlewares.JWTAuthenticate())
 
 	if log, err := services.InfoLog(); err == nil {
-		log.Info().Msgf("Add GET::/user/:id router")
+		log.Info().Msgf("Add GET::/api/user/:id router")
 	}
-	user_r.Get("/:id", middlewares.JWTAuthenticate(), controllers.GetUserByID())
+	userR.Get("/:id", controllers.GetUserByID())
+
+	if log, err := services.InfoLog(); err == nil {
+		log.Info().Msgf("Add POST::/api/user router")
+	}
+
+	perms := helpers.NewSet[string]()
+	perms.Add("ADMIN")
+	userR.Post("", middlewares.RoutePermission(perms, helpers.IN), controllers.GetActiveUsers())
 }

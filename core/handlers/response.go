@@ -1,7 +1,7 @@
 package handlers
 
 import (
-	"tde/fiber-api/core/structs"
+	"him/fiber-api/core/structs"
 
 	"github.com/gofiber/fiber/v2"
 )

@@ -1,8 +1,8 @@
 package controllers
 
 import (
-	"tde/fiber-api/api/public/structs"
-	"tde/fiber-api/core/handlers"
+	"him/fiber-api/api/public/structs"
+	"him/fiber-api/core/handlers"
 
 	"github.com/gofiber/fiber/v2"
 	"golang.org/x/crypto/bcrypt"

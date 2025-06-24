@@ -1,0 +1,26 @@
+@BASE_URL={{protocol}}://{{host}}:{{port}}
+
+#PING
+GET {{BASE_URL}}/ping HTTP/1.1
+
+### Login API
+
+POST {{BASE_URL}}/auth/login HTTP/1.1
+User-Agent: rest-client
+Content-Type: application/json
+
+{
+    "account": "usersakti",
+    "password": "usersakti"
+}
+
+### First Login API
+
+POST {{BASE_URL}}/auth/first-login HTTP/1.1
+User-Agent: rest-client
+Content-Type: application/json
+
+{
+    "account": "usersakti",
+    "password": "usersakti"
+}

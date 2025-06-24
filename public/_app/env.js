@@ -1,0 +1,1 @@
+export const env={"PUBLIC_APP_VERSION":"1.0b","PUBLIC_APP_NAME":"KolamKu","PUBLIC_RUN_IN":"CLIENT"}

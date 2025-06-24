@@ -1,9 +1,11 @@
 package setup
 
 import (
+	"embed"
+	"him/fiber-api/core/handlers"
+	"him/fiber-api/core/services"
+	"net/http"
 	"os"
-	"tde/fiber-api/core/handlers"
-	"tde/fiber-api/core/services"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
@@ -21,7 +23,7 @@ import (
 	fiberlog "github.com/phuslu/log/fiber"
 )
 
-func SetupFiber() *fiber.App {
+func SetupFiber(embedFile embed.FS) *fiber.App {
 	fiberEngine := fiber.New(fiber.Config{
 		ErrorHandler: handlers.ErrorHandler,
 	})
@@ -31,7 +33,7 @@ func SetupFiber() *fiber.App {
 	SetupCORS(fiberEngine)
 
 	if log, err := services.DebugLog(); err == nil {
-		log.Debug().Msgf("Add EncryotCookie Middleware")
+		log.Debug().Msgf("Add EncryptCookie Middleware")
 	}
 	fiberEngine.Use(encryptcookie.New(encryptcookie.Config{
 		Key: os.Getenv("SECRET_KEY"),
@@ -41,8 +43,9 @@ func SetupFiber() *fiber.App {
 		log.Debug().Msgf("Add Favicon Middleware")
 	}
 	fiberEngine.Use(favicon.New(favicon.Config{
-		File: "./assets/favicon.ico",
-		URL:  "/favicon.ico",
+		// File: "./favicon.ico",
+		// URL:  "/favicon.ico",
+		FileSystem: http.FS(embedFile),
 	}))
 
 	if log, err := services.DebugLog(); err == nil {
@@ -114,7 +117,7 @@ func SetupLimiter(fiberEngine *fiber.App) {
 	if log, err := services.DebugLog(); err == nil {
 		log.Debug().Msgf("Add Limiter Middleware")
 	}
-	fiberEngine.Use(limiter.New(limiter.Config{
+	fiberEngine.Use("/api", limiter.New(limiter.Config{
 		// Next: func(c *fiber.Ctx) bool {
 		// 	return c.IP() == "127.0.0.1" || c.IP() == "localhost"
 		// },

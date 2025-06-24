@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"errors"
-	"tde/fiber-api/core/services"
+	"him/fiber-api/core/services"
 
 	"github.com/gofiber/fiber/v2"
 )

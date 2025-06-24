@@ -1,0 +1,19 @@
+@BASE_URL={{protocol}}://{{host}}:{{port}}
+
+#PING
+GET {{BASE_URL}}/ping HTTP/1.1
+
+### Bcrypt Hash
+
+POST {{BASE_URL}}/generate/bcrypt HTTP/1.1
+User-Agent: rest-client
+Content-Type: application/json
+
+{
+    "password": "usersakti"
+}
+
+### UUI v7
+
+GET {{BASE_URL}}/generate/uuid-v7 HTTP/1.1
+User-Agent: rest-client

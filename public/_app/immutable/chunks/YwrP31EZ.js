@@ -1,0 +1,1 @@
+import{e as l}from"./Cw4HPwm5.js";const a=l({show_loader:!1,title_loader:"",color_scheme:"light",hold_main_loader:!1,layout:"main",is_public:!1,breadcrumb:[],platform:null,device:null,orientation:null});export{a as l};

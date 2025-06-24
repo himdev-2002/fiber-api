@@ -1,20 +1,21 @@
 package core
 
 import (
+	"embed"
+	"him/fiber-api/core/setup"
 	"log"
-	"tde/fiber-api/core/setup"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/joho/godotenv"
 )
 
-func SetupApp() *fiber.App {
+func SetupApp(embedFile embed.FS, dbPath string) *fiber.App {
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
-	setup.SetupDBSys()
-	fiberEngine := setup.SetupFiber()
+	setup.SetupDBSys(dbPath)
+	fiberEngine := setup.SetupFiber(embedFile)
 	setup.SetupRouter(fiberEngine)
 
 	return fiberEngine

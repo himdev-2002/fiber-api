@@ -1,21 +1,22 @@
 package setup
 
 import (
+	"him/fiber-api/core/models"
+	"him/fiber-api/core/services"
 	"os"
-	"tde/fiber-api/core/models"
-	"tde/fiber-api/core/services"
 
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
 
-func SetupDBSys() {
+func SetupDBSys(dbPath string) {
 	if log, err := services.DebugLog(); err == nil {
 		log.Debug().Msgf("Connecting to Sys DB...")
 	}
 	var err error
 	if os.Getenv("DB_SYS_DRIVER") == "sqlite" {
-		services.DBCore, err = gorm.Open(sqlite.Open(os.Getenv("DB_SYS_URL")), &gorm.Config{})
+		// services.DBCore, err = gorm.Open(sqlite.Open(os.Getenv("DB_SYS_URL")), &gorm.Config{})
+		services.DBCore, err = gorm.Open(sqlite.Open(dbPath), &gorm.Config{})
 	}
 
 	if err != nil {

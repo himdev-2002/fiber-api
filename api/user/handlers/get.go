@@ -2,9 +2,9 @@ package handlers
 
 import (
 	"fmt"
-	"tde/fiber-api/api/user/structs"
-	"tde/fiber-api/core/models"
-	"tde/fiber-api/core/services"
+	"him/fiber-api/api/user/structs"
+	"him/fiber-api/core/models"
+	"him/fiber-api/core/services"
 
 	"github.com/go-playground/validator/v10"
 )

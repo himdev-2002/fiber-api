@@ -1,0 +1,7 @@
+organization=himdev
+projectKey=himdev_fiber-go
+serverUrl=https://sonarcloud.io
+serverVersion=8.0.0.63940
+dashboardUrl=https://sonarcloud.io/dashboard?id=himdev_fiber-go
+ceTaskId=AZcvM3hd3gRW9BUAgE0P
+ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AZcvM3hd3gRW9BUAgE0P

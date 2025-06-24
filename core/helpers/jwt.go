@@ -2,12 +2,12 @@ package helpers
 
 import (
 	"fmt"
+	"him/fiber-api/core/models"
+	"him/fiber-api/core/services"
+	"him/fiber-api/core/structs"
 	"os"
 	"slices"
 	"strconv"
-	"tde/fiber-api/core/models"
-	"tde/fiber-api/core/services"
-	"tde/fiber-api/core/structs"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
@@ -34,6 +34,7 @@ func GenerateToken(user *models.User) (string, string, error) {
 			Email:     user.Email,
 			FirstName: user.FirstName,
 			LastName:  *user.LastName,
+			Roles:     []string{"ADMIN"},
 			RegisteredClaims: jwt.RegisteredClaims{
 				// A usual scenario is to set the expiration time relative to the current time
 				ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Duration(expiredHour) * time.Hour)),
@@ -60,7 +61,7 @@ func GenerateToken(user *models.User) (string, string, error) {
 			},
 		}
 		// fmt.Println(refreshClaims)
-
+		// fmt.Println("SECRET KEY: ", os.Getenv("SECRET_KEY"))
 		token, err = jwt.NewWithClaims(jwt.SigningMethodHS256, claims).SignedString([]byte(os.Getenv("SECRET_KEY")))
 		// fmt.Println(token)
 		if err != nil {

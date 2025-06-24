@@ -1,34 +1,39 @@
 package router
 
 import (
-	"tde/fiber-api/api/public/controllers"
-	"tde/fiber-api/core/services"
+	"him/fiber-api/api/public/controllers"
+	"him/fiber-api/core/services"
 
 	"github.com/gofiber/fiber/v2"
 )
 
 func SetupRouter(app *fiber.App) {
-	g_r := app.Group("/generate")
+	gR := app.Group("/api/generate")
 
 	if log, err := services.InfoLog(); err == nil {
-		log.Info().Msgf("Add GET::/generate/short-uuid router")
+		log.Info().Msgf("Add GET::/api/generate/short-uuid router")
 	}
-	g_r.Get("/short-uuid", controllers.ShortUUID())
+	gR.Get("/short-uuid", controllers.ShortUUID())
 
 	if log, err := services.InfoLog(); err == nil {
-		log.Info().Msgf("Add POST::/generate/bcrypt router")
+		log.Info().Msgf("Add GET::/api/generate/uuid-v7 router")
 	}
-	g_r.Post("/bcrypt", controllers.Bcrypt())
-
-	user_r := app.Group("/user")
+	gR.Get("/uuid-v7", controllers.UUID_V7())
 
 	if log, err := services.InfoLog(); err == nil {
-		log.Info().Msgf("Add POST::/user/register router")
+		log.Info().Msgf("Add POST::/api/generate/bcrypt router")
 	}
-	user_r.Post("/register", controllers.UserRegister())
+	gR.Post("/bcrypt", controllers.Bcrypt())
+
+	userR := app.Group("/api/user")
 
 	if log, err := services.InfoLog(); err == nil {
-		log.Info().Msgf("Add PUT::/user/change-password router")
+		log.Info().Msgf("Add POST::/api/user/register router")
 	}
-	user_r.Put("/change-password", controllers.ChangePassword())
+	userR.Post("/register", controllers.UserRegister())
+
+	if log, err := services.InfoLog(); err == nil {
+		log.Info().Msgf("Add PUT::/api/user/change-password router")
+	}
+	userR.Put("/change-password", controllers.ChangePassword())
 }

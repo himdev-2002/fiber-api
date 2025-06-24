@@ -1,8 +1,10 @@
 package helpers
 
 import (
+	"crypto/rand"
+	"him/fiber-api/core/structs"
+	"math/big"
 	"slices"
-	"tde/fiber-api/core/structs"
 )
 
 func ConvertToDataResponse(data *[]map[string]interface{}, exclude *[]string) (*structs.DataResponse, error) {
@@ -39,4 +41,20 @@ func ConvertToDataResponse(data *[]map[string]interface{}, exclude *[]string) (*
 	}
 
 	return &resp, nil
+}
+
+func generateSecret(length int) (string, error) {
+	const charset = "abcdefghijklmnopqrstuvwxyz" +
+		"ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+		"0123456789" +
+		"!@#$%^&*()-_=+[]{}|;:',.<>?/`~"
+	secret := make([]byte, length)
+	for i := 0; i < length; i++ {
+		nBig, err := rand.Int(rand.Reader, big.NewInt(int64(len(charset))))
+		if err != nil {
+			return "", err
+		}
+		secret[i] = charset[nBig.Int64()]
+	}
+	return string(secret), nil
 }

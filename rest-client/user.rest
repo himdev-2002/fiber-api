@@ -1,0 +1,15 @@
+@BASE_URL={{protocol}}://{{host}}:{{port}}
+
+#PING
+GET {{BASE_URL}}/ping HTTP/1.1
+
+### POST user
+
+POST {{BASE_URL}}/user HTTP/1.1
+User-Agent: rest-client
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+
+}
