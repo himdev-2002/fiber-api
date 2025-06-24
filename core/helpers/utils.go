@@ -4,6 +4,7 @@ import (
 	"crypto/rand"
 	"him/fiber-api/core/structs"
 	"math/big"
+	"reflect"
 	"slices"
 )
 
@@ -57,4 +58,70 @@ func generateSecret(length int) (string, error) {
 		secret[i] = charset[nBig.Int64()]
 	}
 	return string(secret), nil
+}
+
+func CompareStructs(oldVal, newVal interface{}) map[string][2]interface{} {
+	changes := make(map[string][2]interface{})
+
+	oldValRef := reflect.ValueOf(oldVal)
+	newValRef := reflect.ValueOf(newVal)
+
+	// Dereference pointer if needed
+	if oldValRef.Kind() == reflect.Ptr {
+		oldValRef = oldValRef.Elem()
+	}
+	if newValRef.Kind() == reflect.Ptr {
+		newValRef = newValRef.Elem()
+	}
+
+	oldType := oldValRef.Type()
+
+	for i := 0; i < oldValRef.NumField(); i++ {
+		field := oldType.Field(i)
+
+		// Skip unexported fields
+		if !oldValRef.Field(i).CanInterface() {
+			continue
+		}
+
+		oldField := oldValRef.Field(i).Interface()
+		newField := newValRef.Field(i).Interface()
+
+		if !reflect.DeepEqual(oldField, newField) {
+			changes[field.Name] = [2]interface{}{oldField, newField}
+		}
+	}
+
+	return changes
+}
+
+func compareFields(oldVal, newVal interface{}, fields []string) map[string][2]interface{} {
+	changes := make(map[string][2]interface{})
+
+	oldRef := reflect.ValueOf(oldVal).Elem()
+	newRef := reflect.ValueOf(newVal).Elem()
+	typ := oldRef.Type()
+
+	fieldMap := make(map[string]bool)
+	for _, f := range fields {
+		fieldMap[f] = true
+	}
+
+	for i := 0; i < oldRef.NumField(); i++ {
+		field := typ.Field(i)
+		if !fieldMap[field.Name] {
+			continue // hanya bandingkan field whitelist
+		}
+		if !oldRef.Field(i).CanInterface() {
+			continue
+		}
+
+		oldField := oldRef.Field(i).Interface()
+		newField := newRef.Field(i).Interface()
+
+		if !reflect.DeepEqual(oldField, newField) {
+			changes[field.Name] = [2]interface{}{oldField, newField}
+		}
+	}
+	return changes
 }
