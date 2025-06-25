@@ -25,7 +25,7 @@ type Category struct {
 	UpdatedDt time.Time `gorm:"not null;autoUpdateTime;column:updated_dt" structs:"updated_dt"`
 	UpdatedBy uint64    `gorm:"column:updated_by" structs:"updated_by"`
 
-	LastSyncDt time.Time `gorm:"autoUpdateTime;column:last_sync_dt" structs:"last_sync_dt"`
+	LastSyncDt time.Time `gorm:"column:last_sync_dt" structs:"last_sync_dt"`
 }
 
 func (c Category) StatLabel() string {

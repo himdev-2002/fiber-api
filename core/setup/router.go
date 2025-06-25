@@ -13,8 +13,9 @@ func SetupRouter(fiberEngine *fiber.App) {
 	}
 
 	api.SetupPublicRouter(fiberEngine)
-	api.SetupAuthRouter(fiberEngine)
-	api.SetupUserRouter(fiberEngine)
+	// api.SetupAuthRouter(fiberEngine)
+	// api.SetupUserRouter(fiberEngine)
+	api.SetupSysParamRouter(fiberEngine)
 	if log, err := services.DebugLog(); err == nil {
 		log.Debug().Msgf("App router has been CONFIGURED!")
 	}

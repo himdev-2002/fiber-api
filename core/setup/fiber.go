@@ -8,6 +8,9 @@ import (
 	"os"
 	"time"
 
+	core_structs "him/fiber-api/core/structs"
+
+	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/compress"
 	"github.com/gofiber/fiber/v2/middleware/cors"
@@ -27,6 +30,15 @@ func SetupFiber(embedFile embed.FS) *fiber.App {
 	fiberEngine := fiber.New(fiber.Config{
 		ErrorHandler: handlers.ErrorHandler,
 	})
+
+	fiberEngine.Use(func(c *fiber.Ctx) error {
+		appState := &core_structs.AppState{
+			Validator: validator.New(),
+		}
+		c.Locals("state", appState)
+		return c.Next()
+	})
+
 	SetupLogger(fiberEngine)
 	SetupCompress(fiberEngine)
 	SetupLimiter(fiberEngine)

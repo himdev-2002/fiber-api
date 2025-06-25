@@ -15,8 +15,8 @@ func SetupDBSys(dbPath string) {
 	}
 	var err error
 	if os.Getenv("DB_SYS_DRIVER") == "sqlite" {
-		// services.DBCore, err = gorm.Open(sqlite.Open(os.Getenv("DB_SYS_URL")), &gorm.Config{})
-		services.DBCore, err = gorm.Open(sqlite.Open(dbPath), &gorm.Config{})
+		services.DBCore, err = gorm.Open(sqlite.Open(os.Getenv("DB_SYS_URL")), &gorm.Config{})
+		// services.DBCore, err = gorm.Open(sqlite.Open(dbPath), &gorm.Config{})
 	}
 
 	if err != nil {
@@ -36,7 +36,9 @@ func migrateDBSys() {
 	if log, err := services.DebugLog(); err == nil {
 		log.Debug().Msgf("Migrate Sys DB...")
 	}
-	services.DBCore.Table("m_user").AutoMigrate(&models.User{})
+	// services.DBCore.Table("m_user").AutoMigrate(&models.User{})
+	services.DBCore.Table(models.SysParamTbl).AutoMigrate(&models.SysParam{})
+	services.DBCore.Table(models.LogSysParamTbl).AutoMigrate(&models.LogSysParam{})
 }
 
 func DisconnectDBSys() {

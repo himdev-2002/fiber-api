@@ -43,6 +43,7 @@ func writeTempDB() (string, error) {
 }
 
 func main() {
+
 	dbPath, err := writeTempDB()
 	if err != nil {
 		log.Fatalf("write temp db: %v", err)

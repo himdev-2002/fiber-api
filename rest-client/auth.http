@@ -1,0 +1,6 @@
+### Check API Endpoint
+
+GET https://{{host}}{{endpoint}}
+Accept: application/json
+
+###

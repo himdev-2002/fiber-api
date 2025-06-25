@@ -7,9 +7,9 @@ import (
 	"gorm.io/gorm"
 )
 
-const LogCategoryTbl string = "LOG_SYS_PARAM_CAT"
+const LogSysParamTbl string = "LOG_SYS_PARAM"
 
-type LogCategory struct {
+type LogSysParam struct {
 	PKID      uint64    `gorm:"not null;index:lsysparcat_idx_1" structs:"pk_id" validated:"min=0;"`
 	CreatedDt time.Time `gorm:"not null;autoCreateTime;column:created_dt" structs:"created_dt"` // UNIX timestamp (int64)
 	CreatedBy uint64    `gorm:"column:created_by" structs:"created_by"`
@@ -20,18 +20,18 @@ type LogCategory struct {
 	LastSyncDt time.Time `gorm:"autoUpdateTime;column:last_sync_dt" structs:"last_sync_dt"`
 }
 
-func (l *LogCategory) SaveLogCategory() (*LogCategory, error) {
+func (l *LogSysParam) SaveLogSysParam() (*LogSysParam, error) {
 	tx := services.DBCore.Session(&gorm.Session{SkipDefaultTransaction: true})
-	err := tx.Table(LogCategoryTbl).Create(&l).Error
+	err := tx.Table(LogSysParamTbl).Create(&l).Error
 	if err != nil {
-		return &LogCategory{}, err
+		return &LogSysParam{}, err
 	}
 	return l, nil
 }
 
-func (l *LogCategory) GetLatestByID(id *uint64) error {
+func (l *LogSysParam) GetLatestByID(id *uint64) error {
 	tx := services.DBCore.Session(&gorm.Session{PrepareStmt: true})
-	err := tx.Table(LogCategoryTbl).Where("PKID = ?", *id).Order("created_dt DESC").First(&l).Error
+	err := tx.Table(LogSysParamTbl).Where("PKID = ?", *id).Order("created_dt DESC").First(&l).Error
 	if err != nil {
 		return err
 	}

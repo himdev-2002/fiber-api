@@ -1,0 +1,33 @@
+@BASE_URL={{protocol}}://{{host}}:{{port}}
+
+### Add SysParam
+
+POST {{BASE_URL}}/api/sysparam HTTP/1.1
+User-Agent: rest-client
+Content-Type: application/json
+
+{
+    "cat_id": 1,
+    "_str_1": "STR 1"
+}
+
+### Get User SysParam
+
+GET {{BASE_URL}}/api/sysparam/user/999 HTTP/1.1
+User-Agent: rest-client
+
+### Delete SysParam
+
+DELETE {{BASE_URL}}/api/sysparam/1 HTTP/1.1
+User-Agent: rest-client
+
+### Update SysParam
+
+PUT {{BASE_URL}}/api/sysparam/2 HTTP/1.1
+User-Agent: rest-client
+Content-Type: application/json
+
+{
+    "_str_1": "STR 222",
+    "_num_1": 222
+}
